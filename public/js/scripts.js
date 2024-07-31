@@ -1,3 +1,5 @@
+import { getQueryParams } from './util/utility.js'
+
 $(document).ready(function () {
   function updateTable() {
     const author = $('#authorDropdownContainer .dropdown-input').val()
@@ -5,6 +7,8 @@ $(document).ready(function () {
     const url = `/filter?author=${encodeURIComponent(author)}&category=${encodeURIComponent(
       category
     )}`
+
+    console.log(getQueryParams(url))
 
     htmx.ajax('GET', url, {
       target: '#tableContainer',
