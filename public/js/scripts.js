@@ -1,4 +1,20 @@
 $(document).ready(function () {
+  function updateTable() {
+    const author = $('#authorDropdownContainer .dropdown-input').val()
+    const category = $('#categoryDropdownContainer .dropdown-input').val()
+    const url = `/filter?author=${encodeURIComponent(author)}&category=${encodeURIComponent(
+      category
+    )}`
+
+    htmx.ajax('GET', url, {
+      target: '#tableContainer',
+      swap: 'innerHTML',
+    })
+  }
+
+  $('#authorDropdownContainer').on('change', '.dropdown-input', updateTable)
+  $('#categoryDropdownContainer').on('change', '.dropdown-input', updateTable)
+
   function initializeDropdowns() {
     $('.dropdown-container').each(function () {
       const container = $(this)
@@ -42,6 +58,7 @@ $(document).ready(function () {
       optionsContainer.on('mousedown', '.dropdown-option', function () {
         input.val($(this).text())
         optionsContainer.hide()
+        updateTable()
       })
     })
   }
