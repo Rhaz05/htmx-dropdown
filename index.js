@@ -46,6 +46,7 @@ const data = [
   },
   { id: nanoid(5), name: 'Skibidi', author: 'Lenard', category: 'Sci-Fi', status: 'Completed' },
   { id: nanoid(5), name: 'I Want BBC', author: 'Kurt', category: 'Action', status: 'In Progress' },
+  { id: nanoid(5), name: 'Ow Noo!!!', author: 'Kurt', category: 'Horror', status: 'In Progress' },
 ]
 
 app.get('/dropdown', (req, res) => {

@@ -62,7 +62,7 @@ export const addColumnDetails = ({ author, status }) => {
     <td class="align-middle">
       ${status}
     </td>
-    <td class="align-middle">
+    <td class="align-middle" hx-get="/dynamic" hx-trigger="load delay:100ms" hx-target="#dynamicTable" hx-swap="beforeend">
       <button class="btn btn-outline-danger">Delete</button>
     </td>
     `
