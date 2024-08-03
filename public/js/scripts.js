@@ -26,4 +26,9 @@ $(document).ready(function () {
       Dropdown()
     }
   })
+
+  $(document).on('click', '#deleterow', function (e) {
+    let $row = $(this).closest('tr')
+    $row.remove()
+  })
 })

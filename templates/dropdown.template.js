@@ -33,7 +33,7 @@ export const row = ({ options, placeholder, label, refresh }) => {
             name="${label}"
           ></div>
         </td>
-        <td id="${target}">Select a Category to display Options</td>
+        <td id="${target}" class="align-middle">Select a Category to display Options</td>
     </tr>`
 }
 
@@ -62,8 +62,8 @@ export const addColumnDetails = ({ author, status }) => {
     <td class="align-middle">
       ${status}
     </td>
-    <td class="align-middle" hx-get="/dynamic" hx-trigger="load delay:100ms" hx-target="#dynamicTable" hx-swap="beforeend">
-      <button class="btn btn-outline-danger">Delete</button>
+    <td class="align-middle" hx-get="/dynamic" hx-trigger="load" hx-target="#dynamicTable" hx-swap="beforeend">
+      <button class="btn btn-outline-danger" id="deleterow">Delete</button>
     </td>
     `
 }
