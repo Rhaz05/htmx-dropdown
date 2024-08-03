@@ -10,3 +10,4 @@ export const getQueryParams = (url) => {
   }
   return params
 }
+

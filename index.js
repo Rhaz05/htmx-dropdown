@@ -1,7 +1,12 @@
 import express from 'express'
 import morgan from 'morgan'
 import { nanoid } from 'nanoid'
-import { dropdown } from './templates/dropdown.template.js'
+import {
+  dropdown,
+  row,
+  addColumnDropdown,
+  addColumnDetails,
+} from './templates/dropdown.template.js'
 
 const app = express()
 const port = 3000
@@ -52,7 +57,7 @@ app.get('/dropdown', (req, res) => {
         dropdown({
           options: ['Action', 'Romance', 'Tragedy', 'Sci-Fi', 'Horror'],
           placeholder: 'Select a Default',
-          type: type,
+          refresh: type,
           name: 'Default',
         })
       )
@@ -64,7 +69,7 @@ app.get('/dropdown', (req, res) => {
         dropdown({
           options: ['All', 'Action', 'Romance', 'Tragedy', 'Sci-Fi', 'Horror'],
           placeholder: 'Select a Category',
-          type: type,
+          refresh: type,
           name: 'Category',
         })
       )
@@ -75,7 +80,7 @@ app.get('/dropdown', (req, res) => {
         dropdown({
           options: ['All', 'Rhaz', 'Fuzan', 'Kurt', 'Lenard'],
           placeholder: 'Select an Author',
-          type: type,
+          refresh: type,
           name: 'Author',
         })
       )
@@ -137,6 +142,64 @@ app.get('/load', (req, res) => {
     )
     .join('')
   res.send(rows)
+})
+
+//#region Dynamic Dropdowns
+app.get('/dynamic', (req, res) => {
+  res.send(
+    row({
+      options: ['All', 'Action', 'Romance', 'Tragedy', 'Sci-Fi', 'Horror'],
+      placeholder: 'Select a Category',
+      refresh: 'true',
+      label: 'Category',
+    })
+  )
+})
+
+app.get('/test-add-row', (req, res) => {
+  req.query.category = req.query.category || 'All'
+  const target = req.query.target
+
+  let title = []
+
+  const filteredData = data.filter((item) => {
+    const isCategoryMatch = req.query.category === 'All' || item.category === req.query.category
+    return isCategoryMatch
+  })
+
+  filteredData.forEach((item) => {
+    title.push(item.name)
+  })
+
+  res.send(
+    addColumnDropdown({
+      options: title,
+      placeholder: 'Select a Category',
+      refresh: 'true',
+      label: 'Title',
+      target: target,
+    })
+  )
+})
+
+app.get('/test-add-row-details', (req, res) => {
+  const title = req.query.title
+  console.log(title)
+  if (!title) {
+    res.status(400).send('No Title Provided')
+  }
+
+  const details = data.filter((item) => {
+    return item.name === title
+  })
+
+  const { name, author, category, status } = details[0]
+  res.status(200).send(
+    addColumnDetails({
+      author,
+      status,
+    })
+  )
 })
 
 app.listen(port, () => {
