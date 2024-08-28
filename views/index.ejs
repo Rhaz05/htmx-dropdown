@@ -26,6 +26,56 @@
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-header">
+                        <h5 class="card-title">Add Books</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <label for="title">Title</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"
+                                    placeholder="Enter Book Title"
+                                    id="title"
+                                >
+                            </div>
+                            <div 
+                                class="col-xl-6" 
+                                hx-get="/dropdown?identifier=Author&value=specific" 
+                                hx-trigger="load"
+                                id="bookAuthor"
+                            ></div>
+                        </div>
+                        <div class="row mt-2">
+                            <div 
+                                class="col-xl-6" 
+                                hx-get="/dropdown?identifier=Category&value=specific"
+                                hx-trigger="load"
+                                id="bookCategory"
+                            ></div>
+                            <div 
+                                class="col-xl-6" 
+                                hx-get="/dropdown?identifier=Status" 
+                                hx-trigger="load"
+                                id="bookStatus"
+                            ></div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-xl-2 text-end mt-2">
+                                <button class="btn btn-primary w-100" id="addBook">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-2">
+        <div class="row justify-content-center">
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-header">
                         <h5 class="card-title">Filter</h5>
                     </div>
                     <div class="card-body">

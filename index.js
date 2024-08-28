@@ -28,7 +28,7 @@ const data = [
     name: 'Rizzing Big Gyats',
     author: 'Lenard',
     category: 'Romance',
-    status: 'In Progress',
+    status: 'Ongoing',
   },
   {
     id: nanoid(5),
@@ -42,16 +42,23 @@ const data = [
     name: 'Eyy Yooow',
     author: 'Kurt',
     category: 'Tragedy',
-    status: 'In Progress',
+    status: 'Ongoing',
   },
   { id: nanoid(5), name: 'Skibidi', author: 'Lenard', category: 'Sci-Fi', status: 'Completed' },
-  { id: nanoid(5), name: 'I Want BBC', author: 'Kurt', category: 'Action', status: 'In Progress' },
-  { id: nanoid(5), name: 'Ow Noo!!!', author: 'Kurt', category: 'Horror', status: 'In Progress' },
+  { id: nanoid(5), name: 'I Want BBC', author: 'Kurt', category: 'Action', status: 'Ongoing' },
+  { id: nanoid(5), name: 'Ow Noo!!!', author: 'Kurt', category: 'Horror', status: 'Ongoing' },
+  {
+    id: nanoid(5),
+    name: 'The Last Man',
+    author: 'Fuzan',
+    category: 'Tragedy',
+    status: 'Completed',
+  },
 ]
 
 app.get('/dropdown', (req, res) => {
   try {
-    const { identifier } = req.query
+    const { identifier, value } = req.query
     const type = req.query.type || null
     if (!identifier) {
       res.send(
@@ -72,6 +79,17 @@ app.get('/dropdown', (req, res) => {
           placeholder: 'Select a Category',
           refresh: type,
           name: 'Category',
+        })
+      )
+    }
+
+    if(identifier === "Status"){
+      res.send(
+        dropdown({
+          options: ['Ongoing', 'Completed', 'Canceled', 'Hiatus'],
+          placeholder: 'Select Status',
+          refresh: type,
+          name: 'Status',
         })
       )
     }
@@ -143,6 +161,36 @@ app.get('/load', (req, res) => {
     )
     .join('')
   res.send(rows)
+})
+
+//#region Add Book
+app.get('/add-book', (req, res) => {
+  const { title, author, category, status } = req.query
+  console.log(req.query)
+
+  if (!title || !author || !category || !status) {
+    res.status(400).json({ message: 'All fields are required' })
+  } else {
+    const id = nanoid(5)
+    data.push({
+      id: id,
+      name: title,
+      author: author,
+      category: category,
+      status: status,
+    })
+  
+    const row = /*html*/ `
+      <tr>
+        <td>${id}</td>
+        <td>${title}</td>
+        <td>${category}</td>
+        <td>${author}</td>
+        <td>${status}</td>
+      </tr>`
+  
+    res.send(row)
+  }
 })
 
 //#region Dynamic Dropdowns
